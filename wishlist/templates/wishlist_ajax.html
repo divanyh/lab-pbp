@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1">
+    <title>Wishlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+    </script>
+</head>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="#">{{nama}}</a>
+        <div class="d-flex">
+            <button class="btn btn-outline-light"><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+        </div>
+    </div>
+</nav>
+<!-- <h5>Nama: </h5>
+<p>{{nama}}</p> -->
+
+<div class = "container-sm position-relative" style="max-width: 50rem; margin: 1rem;">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="formNama" class="form-label">Nama Barang: </label>
+            <input type="text" class="form-control" id="formNama" name="name" placeholder="Barang">
+        </div>
+        <div class="mb-3">
+            <label for="formPrice" class="form-label">Harga Barang: </label>
+            <input class="form-control" id="formPrice" rows="3" name="price" placeholder="Description"></input>
+        </div>
+        <div class="mb-3">
+            <label for="formDesc" class="form-label">Deskripsi</label>
+            <textarea class="form-control" id="formDesc" rows="2" name="description"
+                placeholder="Description"></textarea>
+        </div>
+        <input class="btn btn-dark" type="submit" value="Add Barang" id="add_barang_button">
+        <!-- <button class="btn btn-danger"><a href="{% url 'wishlist:add_barang' %}"
+                style="text-decoration: none; color: white;">Back</a></button> -->
+    </form>
+</div>
+
+
+<table class="table table-bordered table-hover" id = "table-barang">
+    <tr>
+        <thead class="table-light">
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Deskripsi</th>
+        </thead>
+
+    </tr>
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    <!-- {% for barang in list_barang %}
+    <tr>
+        <th>{{barang.nama_barang}}</th>
+        <th>{{barang.harga_barang}}</th>
+        <th>{{barang.deskripsi}}</th>
+    </tr>
+    {% endfor %} -->
+</table>
+<h6>Sesi terakhir login:
+    <small class="text-muted">{{last_login }}</small></h5>
+    <!-- <button><a href="{% url 'wishlist:logout' %}">Logout</a></button> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous">
+
+        $.ajax({
+            url: "initial_wishlist_data.json",
+            type: 'get',
+            dataType: 'json',
+            error: function(data){
+                console.log('Error');
+            },
+            success: function(data){
+                console.log(data);
+                // var html_to_append = '';
+                // $.each(data, function(i, item){
+                //     html_to_append += '<tr>' + '<th>' + item.nama_barang + '</th>' + 
+                //     '<th>' + item.harga_barang + '</th>' +
+                //     '<th>' + item.deskripsi + '</th>' + '</tr>';
+                // });
+                // $('#table-barang').html(html_to_append);
+            }
+        });
+
+        $('#add_barang_button').click(function(event){
+
+        })
+    </script>
+
+{% endblock content %}
